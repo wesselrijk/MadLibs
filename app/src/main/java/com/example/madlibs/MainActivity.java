@@ -7,7 +7,6 @@ import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -15,8 +14,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startButtonClicked(View view) {
+
         setContentView(R.layout.story_options);
     }
 
-
+    public void storyButtonClicked(View view) {
+        setContentView(R.layout.fill_placeholders);
+    }
 }
