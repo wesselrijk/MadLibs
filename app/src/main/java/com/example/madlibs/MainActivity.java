@@ -7,6 +7,7 @@ import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -14,6 +15,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startButtonClicked(View view) {
-        Intent intent = new Intent(MainActivity.this, Story.class);
+        setContentView(R.layout.story_options);
     }
+
+
 }
