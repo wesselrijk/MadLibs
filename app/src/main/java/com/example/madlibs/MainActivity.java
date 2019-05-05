@@ -19,6 +19,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void storyButtonClicked(View view) {
+        int id = view.getId();
+
+        switch(id) {
+            case R.id.simpleButton:
+                break;
+            case R.id.tarzanButton:
+                break;
+            case R.id.universityButton:
+                break;
+            case R.id.clothesButton:
+                break;
+            case R.id.danceButton:
+                break;
+        }
         setContentView(R.layout.fill_placeholders);
     }
 }
