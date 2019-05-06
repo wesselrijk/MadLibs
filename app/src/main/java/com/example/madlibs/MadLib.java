@@ -3,6 +3,7 @@ package com.example.madlibs;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -18,18 +19,23 @@ public class MadLib extends AppCompatActivity {
     private EditText editText;
     private TextView wordCounter;
     private int counter;
+    private int layoutId = R.layout.fill_placeholders;
 
     // in the onCreate, the fill_placeholders layout is being set and the story will be loaded
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fill_placeholders);
-
-        // set a story using the parameters obtained from the mainactivity
-        Intent intent = getIntent();
-        storyId = (int) intent.getSerializableExtra("story_Id");
-        InputStream is = getResources().openRawResource(storyId);
-        story = new Story(is);
+        if (savedInstanceState != null) {
+            layoutId = savedInstanceState.getInt("layout_id", R.layout.fill_placeholders);
+            story = (Story) savedInstanceState.getSerializable("story");
+        } else {
+            // set a story using the parameters obtained from the mainactivity
+            Intent intent = getIntent();
+            storyId = (int) intent.getSerializableExtra("story_Id");
+            InputStream is = getResources().openRawResource(storyId);
+            story = new Story(is);
+        }
+        setContentView(layoutId);
 
         editText = findViewById(R.id.editText);
         wordCounter = findViewById(R.id.wordsToGo);
@@ -48,6 +54,9 @@ public class MadLib extends AppCompatActivity {
     }
 
     public void clickedReset(View view) {
+        Intent intent = new Intent(MadLib.this, MainActivity.class);
+        intent.putExtra("reset", 0);
+        startActivity(intent);
     }
 
     private void updateText() {
@@ -58,30 +67,18 @@ public class MadLib extends AppCompatActivity {
 
     private void checkRemaining() {
         if (story.isFilledIn()) {
-            setContentView(R.layout.story_view);
-            TextView title = findViewById(R.id.storyTitle);
-            TextView storyText = findViewById(R.id.story);
-            storyText.setText(story.toString());
-
-            switch (storyId){
-                case R.raw.madlib0_simple:
-                    title.setText("Simple");
-                    break;
-                case R.raw.madlib1_tarzan:
-                    title.setText("Tarzan");
-                    break;
-                case R.raw.madlib2_university:
-                    title.setText("University");
-                    break;
-                case R.raw.madlib3_clothes:
-                    title.setText("Clothes");
-                    break;
-                case R.raw.madlib4_dance:
-                    title.setText("Dance");
-                    break;
-            }
-
-
+            Intent intent = new Intent(MadLib.this, StoryView.class);
+            intent.putExtra("story", story);
+            intent.putExtra("story_Id", storyId);
+            startActivity(intent);
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        // save the current view in the onSaveInstanceState
+        outState.putSerializable("layout_id", layoutId);
+        outState.putSerializable("story", story);
     }
 }
