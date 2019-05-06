@@ -7,14 +7,17 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.io.InputStream;
 
 public class MadLib extends AppCompatActivity {
 
     private int storyId;
-    Story story;
-    EditText editText = findViewById(R.id.editText);
-    TextView wordCounter = findViewById(R.id.wordsToGo);
+    private Story story;
+    private EditText editText;
+    private TextView wordCounter;
+    private int counter;
 
     // in the onCreate, the fill_placeholders layout is being set and the story will be loaded
     @Override
@@ -27,13 +30,18 @@ public class MadLib extends AppCompatActivity {
         storyId = (int) intent.getSerializableExtra("story_Id");
         InputStream is = getResources().openRawResource(storyId);
         story = new Story(is);
-        editText.setHint(story.getNextPlaceholder());
 
-        updateCounterText();
+        editText = findViewById(R.id.editText);
+        wordCounter = findViewById(R.id.wordsToGo);
+        updateText();
     }
 
     public void clickedNext(View view) {
         story.fillInPlaceholder(editText.getText().toString());
+        story.getNextPlaceholder();
+        editText.setText("");
+        updateText();
+        checkRemaining();
     }
 
     public void clickedBack(View view) {
@@ -42,8 +50,38 @@ public class MadLib extends AppCompatActivity {
     public void clickedReset(View view) {
     }
 
-    private void updateCounterText() {
-        int counter = story.getPlaceholderRemainingCount();
+    private void updateText() {
+        counter = story.getPlaceholderRemainingCount();
         wordCounter.setText(counter + " nouns left to fill in.");
+        editText.setHint(story.getNextPlaceholder());
+    }
+
+    private void checkRemaining() {
+        if (story.isFilledIn()) {
+            setContentView(R.layout.story_view);
+            TextView title = findViewById(R.id.storyTitle);
+            TextView storyText = findViewById(R.id.story);
+            storyText.setText(story.toString());
+
+            switch (storyId){
+                case R.raw.madlib0_simple:
+                    title.setText("Simple");
+                    break;
+                case R.raw.madlib1_tarzan:
+                    title.setText("Tarzan");
+                    break;
+                case R.raw.madlib2_university:
+                    title.setText("University");
+                    break;
+                case R.raw.madlib3_clothes:
+                    title.setText("Clothes");
+                    break;
+                case R.raw.madlib4_dance:
+                    title.setText("Dance");
+                    break;
+            }
+
+
+        }
     }
 }
