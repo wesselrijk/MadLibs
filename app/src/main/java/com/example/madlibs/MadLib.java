@@ -48,9 +48,6 @@ public class MadLib extends AppCompatActivity {
         checkRemaining();
     }
 
-    public void clickedBack(View view) {
-    }
-
     public void clickedReset(View view) {
         Intent intent = new Intent(MadLib.this, MainActivity.class);
         intent.putExtra("reset", 0);
@@ -69,6 +66,7 @@ public class MadLib extends AppCompatActivity {
             intent.putExtra("story", story);
             intent.putExtra("story_Id", storyId);
             startActivity(intent);
+            finish();
         }
     }
 
