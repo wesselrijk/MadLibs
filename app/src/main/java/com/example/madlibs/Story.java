@@ -18,7 +18,18 @@
 
 // !YOU MAY WANT TO CHANGE THE PACKAGE BELOW SO THAT IT MATCHES YOUR PROJECT'S PACKAGE!
 package com.example.madlibs;
+/**
+ * The Story class for the app.
+ * This is the class has been pre-made to be used for this app,
+ * source: https://apps.mprog.nl/projects/mad-libs
+ * The class contains all the information for a mad libs story. It takes stories that are stored
+ * in res/raw and fills in the placeholders given by the user as input. While placeholders are
+ * filled in, the class has a method that checks whether all placeholders are filled in, which is
+ * used to determine when the story is complete and a different activity should be started by the
+ * MainActivity.
+ */
 
+// List of imports.
 import java.io.*;
 import java.util.*;
 
