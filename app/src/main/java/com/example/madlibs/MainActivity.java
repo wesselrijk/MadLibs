@@ -1,6 +1,6 @@
 package com.example.madlibs;
 /**
- * <h1>Restuarant</h1>
+ * <h1>MadLib</h1>
  * The MainActivity for the MadLIB app.
  * The MadLib app is an app where the user can play a game that asks the user to fill in
  * placeholders that are filled into a story that the user has not seen yet.
