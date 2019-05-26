@@ -1,5 +1,5 @@
 # MadLibs
-A short description of the app Journal.
+A short description of the app MadLib.
 
 ## Getting Started
 ### Prerequisites
